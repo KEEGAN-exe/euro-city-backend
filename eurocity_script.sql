@@ -25,7 +25,8 @@ CREATE TABLE users (
 
 CREATE TABLE categories (
 	category_id VARCHAR(255) PRIMARY KEY NOT NULL,
-    category_name VARCHAR(50) NOT NULL
+    category_name VARCHAR(50) NOT NULL,
+    state BOOLEAN NOT NULL
 );
 
 CREATE TABLE suppliers (
