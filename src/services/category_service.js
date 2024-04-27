@@ -26,6 +26,12 @@ export const createCategory = async (req, res) => {
         .status(400)
         .json({ message: "Nombre de la categoria requerido" });
     }
+    const uniqueData = await checkUniqueCategory(category_name);
+    if (uniqueData) {
+      return res
+        .status(400)
+        .json({ message: "El nombre de la categoria debe ser unico" });
+    }
     const category_id = await generateCategoryId();
     const [result] = await pool.query("INSERT INTO categories VALUES (?,?,?)", [
       category_id,
@@ -56,6 +62,12 @@ export const updateCategory = async (req, res) => {
     const categoryExists = await checkExistCategory(category_id);
     if (!categoryExists) {
       return res.status(404).json({ message: "Categoria no encontrada" });
+    }
+    const uniqueData = await checkUniqueCategory(category_name);
+    if (uniqueData) {
+      return res
+        .status(400)
+        .json({ message: "El nombre de la categoria debe ser unico" });
     }
     const [result] = await pool.query(
       "UPDATE categories SET category_name = IFNULL(?,category_name) WHERE category_id = ?",
@@ -156,4 +168,12 @@ const generateCategoryId = async () => {
     categorySize < 10 && categorySize > 0 ? "0" : ""
   }${categorySize}`;
   return category_id;
+};
+
+const checkUniqueCategory = async (category_name) => {
+  const [data] = await pool.query(
+    "SELECT * FROM categories WHERE category_name = ? AND state = TRUE",
+    [category_name]
+  );
+  return data.length > 0;
 };
