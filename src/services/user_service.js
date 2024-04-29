@@ -91,7 +91,7 @@ export const createUser = async (req, res) => {
         ]
       );
       if (result.affectedRows) {
-        return res.status(200).json({ message: "Usuario creado" });
+        return res.status(201).json({ message: "Usuario creado" });
       }
     }
     return res.status(500).json({ message: "Error al crear al usuario" });
@@ -106,7 +106,6 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { user_id } = req.params;
-    console.log(user_id);
     const { first_name, last_name, email, phone_number, address } = req.body;
 
     if (!(first_name || last_name || email || phone_number || address)) {
