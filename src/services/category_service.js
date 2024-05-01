@@ -74,7 +74,7 @@ export const updateCategory = async (req, res) => {
       [category_name, category_id]
     );
     if (result.affectedRows > 0) {
-      return res.status(200).json({ message: "Categoria actualizada" });
+      return res.status(202).json({ message: "Categoria actualizada" });
     }
     return res
       .status(500)
@@ -104,7 +104,7 @@ export const deleteCategory = async (req, res) => {
       [category_id]
     );
     if (resul.affectedRows > 0) {
-      return res.status(200).json({ message: "Categoria eliminada" });
+      return res.status(202).json({ message: "Categoria eliminada" });
     }
     return res.status(500).json({ message: "Error al eliminar la categoría" });
   } catch (error) {
