@@ -5,7 +5,7 @@ let productSize = 0;
 export const getAllProducts = async (req, res) => {
   try {
     const [result] = await pool.query(
-      "SELECT p.product_id, p.product_name, DATE_FORMAT(p.create_date, '%Y-%m-%d') as create_date, c.category_name, p.stock, p.price, p.image FROM products p JOIN categories c ON p.category_id = c.category_id WHERE p.state = true"
+      "SELECT p.product_id, p.product_name, DATE_FORMAT(p.create_date, '%Y-%m-%d') as create_date, c.category_name, p.stock, p.price, p.image FROM products p JOIN categories c ON p.category_id = c.category_id WHERE p.state = true ORDER BY p.product_id DESC;"
     );
     if (result) {
       return res.status(200).json(result);
